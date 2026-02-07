@@ -1,0 +1,89 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
+
+class Program
+{
+    // Método para remover acentos de uma string
+    static string RemoverAcentos(string texto)
+
+    {
+
+
+        string textoNormalizado = texto.Normalize(NormalizationForm.FormD);
+        StringBuilder sb = new StringBuilder();
+
+        foreach (char c in textoNormalizado)
+        {
+            if (Char.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+            {
+                sb.Append(c);
+            }
+        }
+
+        return sb.ToString();
+    }
+
+    // Método principal do programa
+    static void Main(string[] args)
+        {
+            string frase;
+
+            // Solicita ao usuário que insira uma frase
+            Console.Write("Escreva uma frase: ");
+            frase = Console.ReadLine();
+        Console.WriteLine();
+
+            string fraseMinuscula = RemoverAcentos(frase.ToLower());
+            string fraselimpa = "";
+
+            // Remove caracteres que não são letras
+            for (int i = 0; i < fraseMinuscula.Length; i++)
+            {
+                // Verifica se o caractere é uma letra
+                if (char.IsLetter(fraseMinuscula[i]))
+                {
+                    fraselimpa += fraseMinuscula[i];
+                }
+            }
+            // Cria uma pilha para armazenar os caracteres da frase limpa
+
+            Stack<char> pilha = new Stack<char>();
+            for (int i = 0; i < fraselimpa.Length; i++)
+            {
+                pilha.Push(fraselimpa[i]);
+
+            }
+            //Inverte a frase usando a pilha
+            string Invertida = "";
+            while (pilha.Count > 0)
+            {
+                Invertida += pilha.Pop();
+            }
+
+            // Exibe a frase limpa e a frase invertida
+            Console.Write("Frase limpa: ");
+
+            Console.WriteLine(fraselimpa);
+            Console.WriteLine();
+            Console.Write("Frase Invertida: ");
+            Console.WriteLine(Invertida);
+            Console.WriteLine();
+
+            // Verifica se a frase limpa é igual à frase invertida
+            if (fraselimpa == Invertida)
+            {
+                // A frase é um palíndromo
+                Console.WriteLine("A frase é um palíndromo");
+            }
+            // A frase não é um palíndromo
+            else if (fraselimpa != Invertida)
+            {
+                Console.WriteLine("A frase não é um palíndromo");
+            }
+
+
+        }
+    
+}
